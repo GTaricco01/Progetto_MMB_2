@@ -9,3 +9,12 @@ M = [19.2 4.8 3.0 7.1 3.7 3.1 2.3 1.4 1.4;
      2.3 1.8 2.0 3.4 2.6 3.5 7.5 3.2 3.2;
      1.4 1.7 0.9 1.5 2.1 1.8 3.2 7.2 7.2;
      1.4 1.7 0.9 1.5 2.1 1.8 3.2 7.2 7.2];
+
+load covidItalia28Oct.mat
+
+figure(1)
+subplot(2,3,1)
+plot(timeVector,confirmed, 'linewidth', 2)      %totale casi confermati
+xlabel('time');title('Total Confirmed cases')
+set(gca,'FontSize',12)
+subplot(2,3,2)
