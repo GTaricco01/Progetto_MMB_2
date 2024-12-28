@@ -1,0 +1,12 @@
+clearvars;close all;clc
+v = trap(@(t)t,-1,1,10)
+
+
+
+function v = trap(f,a,b,n)
+% Composite Trapezoidal R
+% a starting point
+% b ending point
+% n number of subintervals
+v = 2/n*(f(a)+sum(f(a+(2:(n-2))*2/n))+f(b));
+end
