@@ -1,5 +1,5 @@
 clearvars;close all;clc
-v = my_trap(@(t)t.^2,-1,1,100)
+v = my_trap(@(t)t.^2,0,1,1000)
 
 
 
