@@ -8,8 +8,8 @@ recovered     = recovered(infectiontime);
 positive      = confirmed-deaths-recovered;
 removed       = recovered+deaths;
 
-X_c = [441148; 5666380; 5962570; 6570438; 8061697; 9619515; 7964817; 6141543; 4543122];
-N       = sum(X_c);       % Total population N = S + I + R
+N_class = [441148; 5666380; 5962570; 6570438; 8061697; 9619515; 7964817; 6141543; 4543122];
+N       = sum(N_class);       % Total population N = S + I + R
 I0      = confirmed(1);       % initial number of infected (dai dati reali)
 beta    = 8.45e-9;            % rate of infection
 gamma   = 0.24;               % rate of recovery
@@ -24,7 +24,7 @@ I0_c = zeros(9,1); I0_c(7) = I0;
 % X0(:,1) = colonna dei suscettibili iniziali divisi per classe di età
 % X0(:,2) = colonna degli infetti iniziali divisi per classe di età
 % X0(:,3) = colonna dei rimossi iniziali divisi per classe di età
-X0_c(:,1) = X_c;
+X0_c(:,1) = N_class;
 X0_c(:,2) = I0_c;
 M =  [19.2 4.8 3.0 7.1 3.7 3.1 2.3 1.4 1.4;
        4.8 42.4 6.4 5.4 7.5 5.0 1.8 1.7 1.7;
@@ -53,7 +53,7 @@ X_c = X0_c./N;
 for i = 1:n_class
     for j = 1:n_class
         for k = 1:n
-            f(u>=-L+(k-1)*du & u<=-L+k*du) = f(u>=-L+(k-1)*du & u<=-L+k*du) + dt*(M(i,j)*((beta+gamma)*f(u>=-L+(k-1)*du & u<=-L+(k-0)*du)+(2-beta-gamma)*f(u>=-L+(k-1)*du & u<=-L+k*du))*X_c(j,2)+2*M(i,j)*(X_c(j,1)+X_c(j,3))*f(u>=-L+(k-1)*du & u<=-L+k*du));
+            f(u>=-L+(k-1)*du & u<=-L+k*du) = f(u>=-L+(k-1)*du & u<=-L+k*du) + dt*(M(i,j)*((beta+gamma)*f(u>=-L+(k-3)*du & u<=-L+(k-1)*du)+(2-beta-gamma)*f(u>=-L+(k-1)*du & u<=-L+k*du))*X_c(j,2)+2*M(i,j)*(X_c(j,1)+X_c(j,3))*f(u>=-L+(k-1)*du & u<=-L+k*du))+0;
         end
     end
     plot(u,f)
