@@ -1,7 +1,7 @@
-function [u] = Godunov(L,Nx,Tmax,CFL,w,u_0)
+function f = f_Godunov(L,Nx,Tmax,CFL,w,f_0)
 
-%u_0 deve essere un vettore che mi dà le condizoni iniziali del ciclo che
-%voglo mettere in atto.
+% f_0 deve essere un vettore che mi dà le condizoni iniziali del ciclo che
+% voglo mettere in atto.
 
 % Discretizzazione spaziale
 dx = 2*L / Nx;
@@ -13,22 +13,22 @@ Nt = ceil(Tmax / dt);  % Numero di passi temporali
 dt = Tmax / Nt;        % Ricalcolo per adattamento
 
 % Evoluzione nel tempo con schema di Godunov
-u=u_0;
+f = f_0;
 for n = 1:Nt
-    u_new = u;  % Array temporaneo per aggiornamento
+    f_new = f;  % Array temporaneo per aggiornamento
 
     for j = 2:Nx-1
         if abs(x(j))<1
         % Flusso numerico secondo Godunov per w < 0
-            F_jm12 = w * u(j);     % Flusso tra j-1 e j
-            F_jp12 = w * u(j+1);   % Flusso tra j e j+1
+            g_jm12 = w * f(j);     % Flusso tra j-1 e j
+            g_jp12 = w * f(j+1);   % Flusso tra j e j+1
 
         % Aggiornamento della soluzione
-        u_new(j) = u(j) - (dt/dx) * (F_jp12 - F_jm12);
+        f_new(j) = f(j) - (dt/dx) * (g_jp12 - g_jm12);
         end
     end
 
     % Aggiorna la soluzione
-    u = u_new;
+    f = f_new;
 
 end
