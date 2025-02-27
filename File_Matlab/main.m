@@ -17,20 +17,23 @@ L = 10;
 Nu   = 1000;                            % Numero di punti spaziali
 Tmax = 50;                            % Tempo massimo di simulazione
 CFL  = 0.9;                            % Numero di Courant-Friedrichs-Lewyc
-w    = @(u) -1;
+w    = @(u) 1;
 % condizione iniziale
 U0      = -10+9.1*rand(N,1);
 % parametri
-beta    = 8.45e-9;  
+beta   = .5;  
 gamma  = 0.24;
 for t = 1:100
     % for N_c = 1e4
         % primo passo
-        [f_new_tilda,U,n] = MonteCarlo(U0,beta,gamma,N);
+        [f_new_tilda,U,n,edges] = MonteCarlo(U0,beta,gamma,N);
         % secondo passo
-        f_new = Godunov(L,n,Tmax,CFL,w,f_new_tilda);
+        f_new = PassoUpwind(L,n,Tmax,CFL,w,f_new_tilda);
         % aggiornamento
         U0 = U;
-        % sprintf('Suscettibili al tempo %d: %f. Infetti al tempo %d: %f. Rimossi al tempo %d: %f.',t,N,t,N,t,N)
+        S = sum(f_new(1:find(edges==-1)));
+        I = sum(f_new(find(edges==-1):find(edges==1)));
+        R = sum(f_new(find(edges==1):end));
+        sprintf('Suscettibili al tempo %d: %f. Infetti al tempo %d: %f. Rimossi al tempo %d: %f.',t,S,t,I,t,R)
     % end
 end

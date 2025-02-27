@@ -1,4 +1,4 @@
-function [f,U,n] = MonteCarlo(U0,beta,gamma,N)
+function [f,U,n,edges] = MonteCarlo(U0,beta,gamma,N)
 set(0,'DefaultTextInterpreter','latex')
 rng(1)
 
@@ -42,6 +42,7 @@ h = histogram(U,'LineStyle','-','FaceColor','#9ECB73','EdgeColor','#8CB665');
 % ricavo la distribuzione prendendo i valori degli istogrammi
 f = h.Values;
 n = h.NumBins;
+edges = h.BinEdges;
 figure(1)
 plot(h.BinLimits(1):h.BinWidth:h.BinLimits(2)-h.BinWidth,h.Values)
 % legend(sprintf('Distribution of class i at time step %d',t))
