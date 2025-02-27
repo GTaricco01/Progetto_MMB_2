@@ -24,7 +24,7 @@ U0      = -10+9.1*rand(N,1);
 beta   = .5;  
 gamma  = 0.24;
 for t = 1:100
-    % for N_c = 1e4
+    % for N_c = N_class
         % primo passo
         [f_new_tilda,U,n,edges] = MonteCarlo(U0,beta,gamma,N);
         % secondo passo
