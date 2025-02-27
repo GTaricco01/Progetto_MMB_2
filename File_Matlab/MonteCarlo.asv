@@ -13,7 +13,7 @@ for n=1:1
     % U     = U(randperm(N));
     U1    = U0(1:N/2); % per farle interagire le divido in due gruppi
     U2    = U0(N/2+1:end);
-    Theta_b = binornd(1,beta,N/2,1); % per quando N/2 non è intero
+    Theta_b = binornd(1,beta,N/2,1);
     Theta_g = binornd(1,gamma,N/2,1);
     U1new = zeros(N/2,1);
     U2new = zeros(N/2,1);
@@ -21,16 +21,12 @@ for n=1:1
         for i=1:size(M,1)
             for j=1:size(M,2)
                 if (U1(p)<=-1) && (abs(U2(p))<=1) % interazione S-I
-                    % !!!!!!!
-                    % nutro dubbi riguardo l'implementazione delle
-                    % interazioni con la matrice di contato
-                    % !!!!!!!
-                    UU1 = ((1-beta)*U1(p) + beta*(U2(p)+2))*M(i,j); % stati post interazione
+                    UU1 = (1-beta)*U1(p)*M(i,j) + beta*(U2(p)+2); % stati post interazione
                     UU2 = U2(p);
                     U1new(p) = (1-Theta_b(p)).*U1(p) + Theta_b(p).*(UU1); % aggiornamento temporale degli stati
                     U2new(p) = (1-Theta_b(p)).*U2(p) + Theta_b(p).*(UU2);
                 elseif (abs(U1(p))<=1) && (abs(U2(p))<=1) % interazione I-I
-                    UU1 = ((1-gamma)*U1(p) + gamma*(U2(p)+2))*M(i,j); % stati post interazione
+                    UU1 = (1-gamma)*U1(p) + gamma*(U2(p)+2); % stati post interazione
                     UU2 = U2(p);
                     U1new(p) = (1-Theta_g(p)).*U1(p) + Theta_g(p).*(UU1);
                     U2new(p) = (1-Theta_g(p)).*U2(p) + Theta_g(p).*(UU2);

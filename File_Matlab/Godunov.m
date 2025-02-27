@@ -19,7 +19,7 @@ for n = 1:Nt
             g_jm12 = w(uu(j)) * f(j);     % Flusso tra j-1 e j
             g_jp12 = w(uu(j)) * f(j+1);   % Flusso tra j e j+1
         % Aggiornamento della soluzione
-        f_new(j) = f(j) - (dt/du) * (g_jp12 - g_jm12);
+        f_new(j) = f(j) - (dt/du) * (g_jp12 - g_jm12); 
         end
     end
     % Aggiorna la soluzione
