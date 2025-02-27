@@ -1,4 +1,4 @@
-function f = UDS(L,Nu,Tmax,CFL,w,f_0)
+function f = PassoUpwind(L,Nu,Tmax,CFL,w,f_0)
 % f_0 deve essere un vettore che mi dà le condizoni iniziali del ciclo che
 % voglo mettere in atto.
 
