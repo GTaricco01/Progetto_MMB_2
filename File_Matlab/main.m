@@ -1,5 +1,6 @@
 clearvars; close all;clc
 % particelle per MonteCarlo
+format short;
 N_class = [441148; 5666380; 5962570; 6570438; 8061698; 9619516; 7964818; 6141544; 4543122];
 N = sum(N_class);
 M =  [19.2 4.8 3.0 7.1 3.7 3.1 2.3 1.4 1.4;
@@ -20,7 +21,7 @@ w    = @(u) 1;
 % condizione iniziale
 U0 = zeros(max(N_class),numel(N_class));
 for N_c = 1:numel(N_class)
-    U0(1:N_class(N_c),N_c) = -10+9.01*rand(N_class(N_c),1);
+    U0(1:N_class(N_c),N_c) = -10+9.01*rand(N_class(N_c),1); % ho ridotto il numero di infetti iniziali (da 9.1 a 9.01)
 end
 
 % parametri
@@ -46,11 +47,11 @@ for t = 1:100
             I = sum(f_new(find(edges==-1):r));
             R = sum(f_new(r:end));
         end
-        T = table(round(t), S, I, R, 'VariableNames', {'Time_Step', 'Susceptible', 'Infected', 'Removed'});
+        T = table(t, S, I, R, 'RowNames', {'Value'}, 'VariableNames', {'Time_Step', 'Susceptible', 'Infected', 'Removed'});
 
         fprintf('Class %d\n', N_c);
-        disp(T);
-
+        disp(rows2vars(T));
+ 
         % plot della distribuzione della classe N_c
         plot(edges(1:end-1),f_new)
         legend(sprintf('Distribution plot of class %d', N_c),'Location','best')
